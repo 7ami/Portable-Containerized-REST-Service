@@ -1,8 +1,3 @@
-"""
-Automated Test Suite for Portable Containerized REST Service
-Runs all 8 required test cases from the assignment specification without external dependencies.
-"""
-
 import sys
 import json
 import urllib.request
@@ -10,7 +5,6 @@ import urllib.error
 
 BASE_URL = "http://localhost:5000"
 
-# ANSI color codes for terminal display
 GREEN = "\033[92m"
 RED = "\033[91m"
 YELLOW = "\033[93m"
@@ -44,14 +38,12 @@ def run_tests():
     print(f"{CYAN}  Target: {BASE_URL}                                   {RESET}")
     print(f"{CYAN}======================================================\n{RESET}")
 
-    # Check connection first
     status, data = make_request("/health")
     if status is None:
         print(f"{RED}[FAIL] Could not connect to {BASE_URL}. Ensure 'docker compose up' is running!{RESET}")
         print(f"Details: {data.get('error')}\n")
         sys.exit(1)
 
-    # Initial stats reading
     _, initial_stats = make_request("/stats")
     initial_count = initial_stats.get("conversions", 0)
     print(f"Current Redis conversions count before test run: {YELLOW}{initial_count}{RESET}\n")
@@ -138,7 +130,6 @@ def run_tests():
             print(f"         Actual  : Status {status} | Body: {json.dumps(body)}")
             failed += 1
 
-    # Verify /stats persistence
     expected_final_count = initial_count + successful_conversions_in_run
     status, stats_body = make_request("/stats")
     actual_final_count = stats_body.get("conversions")
