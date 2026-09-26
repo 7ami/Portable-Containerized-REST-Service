@@ -8,14 +8,11 @@ Before running the service, ensure the following are installed:
 
 - **Docker Desktop** (version 24.0+ with Compose v2.20+) and WSL 2 backend enabled (on Windows).
 - **Python 3.10+** (standard library only; used to run the automated test suite `test_api.py`).
-- **curl** or **PowerShell** (for manual HTTP endpoint testing).
 
 ---
 
 
 ## 2. How to Build and Start the Complete Application
-
-To build the application image and start both the application and Redis services in the background, run:
 
 ```bash
 git clone https://github.com/7ami/Portable-Containerized-REST-Service.git
@@ -29,7 +26,6 @@ To verify that both containers are running and healthy:
 docker compose ps
 ```
 
-Expected output shows both `icc-app` and `icc-redis` in an `Up (healthy)` state.
 
 ---
 
@@ -38,8 +34,6 @@ Expected output shows both `icc-app` and `icc-redis` in an `Up (healthy)` state.
 The service listens on host port `5000` (`http://localhost:5000`).
 
 ### 3.1 Automated Test Suite
-
-An automated test script is provided that validates all 8 required  cases (including boundary, negative, and invalid input conditions, and verifying persistent counting in Redis):
 
 ```bash
 python test_api.py
@@ -164,8 +158,6 @@ curl -i http://localhost:5000/stats
   "conversions": 3
 }
 ```
-
-*(Note: Only valid conversion requests increment this counter. Invalid requests do not increment it).*
 
 ---
 
