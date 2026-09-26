@@ -20,11 +20,6 @@ To build the application image and start both the application and Redis services
 docker compose up --build -d
 ```
 
-### Flags Explained:
-
-- `--build`: Forces Docker Compose to build the application container image using the local `Dockerfile`.
-- `-d`: Detached mode, running the containers in the background and returning terminal control.
-
 To verify that both containers are running and healthy:
 
 ```bash
@@ -41,13 +36,11 @@ The service listens on host port `5000` (`http://localhost:5000`).
 
 ### 3.1 Automated Test Suite
 
-An automated test script is provided that validates all 8 required rubric test cases (including boundary, negative, and invalid input conditions, and verifying persistent counting in Redis):
+An automated test script is provided that validates all 8 required  cases (including boundary, negative, and invalid input conditions, and verifying persistent counting in Redis):
 
 ```bash
 python test_api.py
 ```
-
-*(Alternatively, on Windows PowerShell: `.\test_api.ps1`)*
 
 ### 3.2 Manual curl Commands
 
