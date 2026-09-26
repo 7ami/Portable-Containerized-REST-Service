@@ -12,11 +12,14 @@ Before running the service, ensure the following are installed:
 
 ---
 
+
 ## 2. How to Build and Start the Complete Application
 
 To build the application image and start both the application and Redis services in the background, run:
 
 ```bash
+git clone https://github.com/7ami/Portable-Containerized-REST-Service.git
+cd Portable-Containerized-REST-Service
 docker compose up --build -d
 ```
 
