@@ -20,7 +20,7 @@ screenshots/
 README.md
 test_api.py
 test_api.ps1
-*.txt
+Project 1*.txt
 
 # Docker files
 Dockerfile
