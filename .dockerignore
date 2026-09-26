@@ -15,19 +15,22 @@ venv/
 .venv/
 env/
 
-# Test scripts & documentation (not needed inside production container)
+# Documentation, screenshots & test files
+screenshots/
+README.md
 test_api.py
 test_api.ps1
-README.md
-IMPLEMENTATION_PLAN.md
+*.txt
+
+# Docker files
+Dockerfile
+.dockerignore
+compose.yaml
+docker-compose.yml
+.env
 
 # IDE & Editor metadata
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# Docker Compose files
-compose.yaml
-docker-compose.yml
-.env
