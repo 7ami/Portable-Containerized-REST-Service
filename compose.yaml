@@ -1,0 +1,67 @@
+services:
+  # ============================================================================
+  # Application Service: REST API in Python / Flask
+  # ============================================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: icc-app
+    # Only the application service exposes a port to the host
+    ports:
+      - "${PORT:-5000}:${PORT:-5000}"
+    # Runtime configuration: connects to Redis using the Compose service name
+    environment:
+      - PORT=${PORT:-5000}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    # Start app only after Redis passes its health check
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - app_network
+    # Graduate Extension (CS 554): Restart policy for fault tolerance
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request, os; urllib.request.urlopen(f'http://localhost:{os.environ.get(\"PORT\", 5000)}/health')"]
+      interval: 10s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+
+  # ============================================================================
+  # Redis Service: Persistent state storage for conversion counter
+  # ============================================================================
+  redis:
+    image: redis:7.2-alpine
+    container_name: icc-redis
+    # Security requirement: Redis port 6379 is NOT published to host
+    # It is accessible exclusively through the private bridge network 'app_network'
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      # Named volume preserving persistent state across container lifetimes
+      - redis_data:/data
+    networks:
+      - app_network
+    # Graduate Extension (CS 554): Restart policy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+# ==============================================================================
+# Private Container Network: Isolated bridge network for internal communication
+# ==============================================================================
+networks:
+  app_network:
+    driver: bridge
+
+# ==============================================================================
+# Persistent Named Volume: Survives container stop, deletion, and recreation
+# ==============================================================================
+volumes:
+  redis_data:
+    driver: local

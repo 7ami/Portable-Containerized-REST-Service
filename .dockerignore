@@ -1,0 +1,33 @@
+# Version control
+.git
+.gitignore
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Test scripts & documentation (not needed inside production container)
+test_api.py
+test_api.ps1
+README.md
+IMPLEMENTATION_PLAN.md
+
+# IDE & Editor metadata
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker Compose files
+compose.yaml
+docker-compose.yml
+.env
